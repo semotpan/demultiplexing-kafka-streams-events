@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Materialized;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,7 +26,7 @@ public final class KStreamBuilder {
 
         stream.filter(userEventAggregator::filter)
                 .groupBy(userEventAggregator::changeKey)
-                .aggregate(UserEntity::new, userEventAggregator::aggregate)
+                .aggregate(UserEntity::new, userEventAggregator::aggregate, Materialized.as("user-entity-cache"))
                 .toStream()
                 .filter((key, value) -> Objects.nonNull(value))
                 .to("userEntity");
