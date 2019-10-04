@@ -1,0 +1,12 @@
+{
+    "type" : "record",
+    "namespace" : "com.semotpan.avro",
+    "name" : "UserEntity",
+    "doc" : "Avro schema for applying and saving all updates on a User",
+    "fields" : [
+        { "name": "user_id", "type" : "string" , "doc" : "Unique user ID" },
+        { "name": "first_name", "type" : "string" , "doc" : "First Name of User" },
+        { "name": "last_name", "type" : "string" , "doc" : "Last Name of User" },
+        { "name": "email", "type" : "string" , "doc" : "Email of User" }
+    ]
+}

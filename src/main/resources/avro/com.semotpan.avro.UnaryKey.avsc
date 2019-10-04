@@ -1,0 +1,9 @@
+{
+    "type" : "record",
+    "namespace" : "com.semotpan.avro",
+    "name" : "UnaryKey",
+    "doc" : "Avro schema for key definition",
+    "fields" : [
+        { "name": "id", "type" : "string" , "doc" : "Key value" }
+    ]
+}

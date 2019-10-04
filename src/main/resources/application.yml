@@ -1,0 +1,40 @@
+server:
+  port: 9000
+
+spring:
+  kafka:
+    bootstrap-servers: PLAINTEXT_HOST://localhost:29092
+
+    streams:
+      application-id: demultiplexing-kafka-streams-events
+      properties:
+        schema:
+          registry:
+            url: http://localhost:8081
+        commit:
+          interval:
+            ms: 100
+        default:
+          key:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+          value:
+            serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+
+    consumer:
+      bootstrap-servers: PLAINTEXT_HOST://localhost:29092
+      group-id: demultiplexing-kafka-streams-events
+      auto-offset-reset: earliest
+      key-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      value-deserializer: com.semotpan.kevents.serializer.ExtendedKafkaAvroDeserializer
+      properties:
+        schema:
+          registry:
+            url: http://localhost:8081
+    producer:
+      bootstrap-servers: PLAINTEXT_HOST://localhost:29092
+      key-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      value-serializer: com.semotpan.kevents.serializer.ExtendedKafkaAvroSerializer
+      properties:
+        schema:
+          registry:
+            url: http://localhost:8081
